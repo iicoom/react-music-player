@@ -1,35 +1,28 @@
-'use strict';
-
-var path = require('path');
-var webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-	 entry: [
-        'webpack-dev-server/client?http://localhost:3000',
-        'webpack/hot/only-dev-server',
-        'react-hot-loader/patch',
-        path.join(__dirname, 'app/index.js')
-    ],
-	devtool: 'eval-source-map',
-	// devServer: {
-	//     contentBase: './dist',
-	//     compress: true,
-	//     port: 3001
-	// },
-	output: {
-		filename: 'bundle.js',
-    	path: path.resolve(__dirname, 'dist')
+	entry: {
+		app: './app/index.js'
+	},
+	devtool: 'inline-source-map',
+	devServer: {
+	    contentBase: './dist',
+	    compress: true,
+	    port: 3000
 	},
 	plugins: [
 		new HtmlWebpackPlugin({
           template: './app/index.tpl.html',
           inject: 'body',
           filename: './index.html'
-        }),
-		new webpack.optimize.OccurenceOrderPlugin(),
-        new webpack.HotModuleReplacementPlugin()
+        })
 	],
+	output: {
+		filename: 'bundle.js',
+    	path: path.resolve(__dirname, 'dist')
+	},
 	module: {
 		resolve:{
 			extensions:['','.js','.json']

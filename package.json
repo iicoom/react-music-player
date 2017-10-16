@@ -5,15 +5,19 @@
   "main": "index.js",
   "scripts": {
     "test": "",
-    "start": "node server",
-    "build": "webpack --config ./webpack.production.config.js --progress --profile --colors",
+    "start": "webpack-dev-server --open",
+    "build": "webpack --config ./webpack.config.js --progress --profile --colors",
     "eslint": "eslint ."
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/iicoom/react-music-player.git"
   },
-  "keywords": ["es6","react","redux"],
+  "keywords": [
+    "es6",
+    "react",
+    "redux"
+  ],
   "author": "",
   "license": "ISC",
   "bugs": {
