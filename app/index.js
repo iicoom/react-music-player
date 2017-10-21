@@ -1,10 +1,8 @@
 import React from 'react'
-import { render } from 'react-dom'
-import Hello from './components/hello'
+import { render } from 'react-dom';
+import Root from './root';
 
 render(
-	<Hello />,
+	<Root />,
 	document.getElementById('root')
 )
-
-
