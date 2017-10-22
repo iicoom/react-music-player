@@ -1,11 +1,11 @@
 import React from 'react'
-import './header.less'
+import './progress.less'
 
 let Progress = React.createClass({
 	render() {
 		return (
-			<div className="row components-progress">
-				{ this.props.progress }s
+			<div className="components-progress">
+				<div className="progress" style={{width: `${this.props.progress}%`}}></div>
 			</div>
 		)
 	}
