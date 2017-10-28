@@ -1,45 +1,34 @@
 import React from 'react'
 import Header from './components/header'
-import Progress from './components/progress'
+import Player from './page/player'
+import { MUSIC_LIST } from './config/musiclist'
 
-let duration = null;
 let Root = React.createClass({
 	getInitialState() {
 		return {
-			progress: '-'
+			currentMusitItem: MUSIC_LIST[0]
 		}
 	},
 	componentDidMount() {
 		$("#player").jPlayer({
 			ready: function () {
 				$(this).jPlayer("setMedia", {
-					mp3: "http://oj4t8z2d5.bkt.clouddn.com/%E6%88%90%E9%83%BD.mp3"
+					mp3: "http://oj4t8z2d5.bkt.clouddn.com/%E6%88%91%E8%A6%81%E4%BD%A0.mp3"
 				}).jPlayer('play');
 			},
 			supplied: "mp3",
 			wmode: "window",
 			useStateClassSkin: true
 		});
-		$('#player').bind($.jPlayer.event.timeupdate, (e) => {
-			duration = e.jPlayer.status.duration;
-			this.setState({
-				progress: e.jPlayer.status.currentPercentAbsolute
-			})
-		})
 	},
 	componentWillUnMount() {
-		$('#player').unbind($.jPlayer.event.timeupdate);
+		
 	},
-	progressChangeHandler(progress) {
-		{/*console.log('from root',progress);*/}
-		$('#player').jPlayer('play', duration * progress);
-	},
-
 	render() {
 		return (
 			<div>
 				<Header />
-				<Progress progress={this.state.progress} onProgressChange={this.progressChangeHandler} barColor="#ff0000"/>
+				<Player currentMusitItem={this.state.currentMusitItem}/>
 			</div>
 		)
 	}
