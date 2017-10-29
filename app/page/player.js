@@ -2,6 +2,7 @@ import React from 'react'
 import Progress from '../components/progress'
 import { Link } from 'react-router';
 require('./player.less');
+import Pubsub from 'pubsub-js'
 
 let duration = null;
 let Player = React.createClass({
@@ -17,7 +18,8 @@ let Player = React.createClass({
 			duration = e.jPlayer.status.duration;
 			this.setState({
 				progress: e.jPlayer.status.currentPercentAbsolute,
-				volume: e.jPlayer.options.volume * 100
+				volume: e.jPlayer.options.volume * 100,
+				leftTime: this.formatTime(duration * (1 - e.jPlayer.status.currentPercentAbsolute / 100))
 			})
 		})
 	},
@@ -41,6 +43,20 @@ let Player = React.createClass({
 			isPlay: !this.state.isPlay
 		})
 	},
+	playPrev() {
+		Pubsub.publish('PLAY_PREV');
+	},
+	playNext() {
+		Pubsub.publish('PLAY_NEXT');
+	},
+	formatTime(time) {
+		time = Math.floor(time);
+		let minutes = Math.floor(time / 60);
+		let seconds = Math.floor(time % 60);
+
+		seconds = seconds < 10 ? `0${seconds}` : seconds;
+		return `${minutes}:${seconds}`;
+	},
 
 	render() {
 		return (
@@ -51,7 +67,7 @@ let Player = React.createClass({
                 		<h2 className="music-title">{this.props.currentMusitItem.title}</h2>
                 		<h3 className="music-artist mt10">歌手{this.props.currentMusitItem.artist}</h3>
                 		<div className="row mt20">
-                			<div className="left-time -col-auto">-2:00{/*this.state.leftTime*/}</div>
+                			<div className="left-time -col-auto">-{this.state.leftTime}</div>
                 			<div className="volume-container">
                 				<i className="icon-volume rt" style={{top: 5, left: -5}}></i>
                 				<div className="volume-wrapper">
@@ -64,9 +80,9 @@ let Player = React.createClass({
                 		</div>
                 		<div className="mt35 row">
                 			<div>
-	                			<i className="icon prev"></i>
+	                			<i className="icon prev" onClick={this.playPrev}></i>
 	                			<i className={`icon ml20 ${this.state.isPlay ? 'pause' : 'play'}`} onClick={this.playControl}></i>
-	                			<i className="icon next ml20"></i>
+	                			<i className="icon next ml20" onClick={this.playNext}></i>
                 			</div>
                 			<div className="-col-auto">
                 				<i className="icon repeat-cycle"></i>
