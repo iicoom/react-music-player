@@ -59,7 +59,7 @@ let Player = React.createClass({
                 				</div>
                 			</div>
                 		</div>
-                		<div style={{height: 10, lineHeight: '10px'}}>
+                		<div style={{height: 10, lineHeight: '10px', marginTop: 10}}>
 			                <Progress progress={this.state.progress} onProgressChange={this.progressChangeHandler} />
                 		</div>
                 		<div className="mt35 row">
